@@ -12,8 +12,15 @@
     console.log(`disconnect ${socket.id}`);
   });
 
-  socket.on('hello', (a, b, c) => {
-    console.log(a, b, c);
+  window.addEventListener('beforeunload', event => {
+    console.log('preventing the window from closing')
+    event.preventDefault();
+    event.returnValue = 'unused string';
+    setTimeout(() => {
+      console.log('emitting hello on socket');
+      socket.emit('hello', (serverAnswer) => {
+        console.log('server answer:', serverAnswer);
+      });
+    }, 1000)
   });
-
 })();

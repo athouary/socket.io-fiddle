@@ -10,8 +10,8 @@ app.use(express.static(__dirname + '/public'));
 io.on('connect', socket => {
   console.log(`connect ${socket.id}`);
 
-  socket.emit('hello', 1, '2', {
-    hello: 'you'
+  socket.on('hello', (callback) => {
+    callback('hey you');
   });
 
   socket.on('disconnect', () => {
